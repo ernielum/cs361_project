@@ -14,13 +14,14 @@ except FileNotFoundError:
 locations.close()
 
 def search_location(LOCATION=None):
-    if not LOCATION:
-        LOCATION = input("Please enter a location to retrieve information about its weather: ")
-    URL = BASE_URL + "current.json?key=" + API_KEY + "&q=" + LOCATION
-    response = requests.get(URL).json()
     while True:
+        if not LOCATION:
+            LOCATION = input("Please enter a location to retrieve information about its weather: ")
+        URL = BASE_URL + "current.json?key=" + API_KEY + "&q=" + LOCATION
+        response = requests.get(URL).json()
         if "error" in response:
             print("Invalid input. Try again.")
+            LOCATION = None
             continue
         else:
             name = response["location"]["name"]
@@ -42,7 +43,7 @@ def search_location(LOCATION=None):
 
             if save == '1':
                 with open("saved_locations.txt", "a") as locations:
-                    locations.write(f"\n{name}")
+                    locations.write(f"{name}\n")
                 print("Saved!")
                 break
             elif save == '2':
@@ -76,11 +77,10 @@ def main():
                 continue
             print("Type the number of the location on the list to view its weather. Type any other character to return to the main menu.")
             saved_number = input()
-            saved_number = int(saved_number)
-            if saved_number not in saved_locations:
+            if not saved_number.isnumeric() or int(saved_number) not in saved_locations:
                 continue
             else:
-                location = saved_locations[saved_number]
+                location = saved_locations[int(saved_number)]
                 search_location(location)
 
         elif action == '1':
