@@ -36,7 +36,7 @@ def search_location(LOCATION=None):
 
     if name not in saved_locations:
         while True:
-            print(f"Would you like to save {name} to your list of locations? Type '1' for YES, '2' for NO.")
+            print(f"Would you like to save {name} to your list of locations for quicker access? Type '1' for YES, '2' for NO.")
 
             save = input()
 
@@ -53,13 +53,17 @@ def search_location(LOCATION=None):
 def main():
     while True:
         print("Type '1' to search a location for information about its weather.")
-        print("Type '2' to view saved locations.")
+        print("Type '2' to view saved locations. Saved locations allow for quicker access to weather information.")
         print("Type '3' to exit the application.")
 
         action = input()
 
         if action == '3':
-            sys.exit()
+            confirm = input("Are you sure? Type '1' to confirm exit. Type any other character to return to main menu.\n")
+            if confirm == "1":
+                sys.exit()
+            else:
+                continue
 
         elif action == '2':
             saved_locations = {}
