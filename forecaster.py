@@ -73,7 +73,7 @@ def view_locations():
             print(f"0. {saved_locations[0]}")
     print("Type the number of the location on the list to view its weather. Type any other character to return to the main menu.")
     saved_number = input()
-    if saved_number.isnumeric() or int(saved_number) in saved_locations:
+    if saved_number.isnumeric():
         if saved_number == "0":
             confirm = input("Are you sure you want to clear the list? Type '1' to confirm. Type any other character to return to the main menu.\n")
             if confirm == "1":
@@ -83,6 +83,8 @@ def view_locations():
         else:
             location = saved_locations[int(saved_number)]
             search_location(location)
+    else:
+        return
 
 # Call and receieve data from partner's microservice
 
@@ -130,7 +132,10 @@ def main():
     art_1 = text2art("Forecaster")
     print(art_1)
 
+    # main program loop
     while True:
+
+        # main menu
         print("Type '1' to search a location for information about its weather.")
         print("Type '2' to view saved locations. Saved locations allow for quicker access to weather information.")
         print("Type '3' to exit the application.")
